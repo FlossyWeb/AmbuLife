@@ -1,10 +1,10 @@
 body {
 	margin: 0px;
 	padding: 0px;
-	background: #000 url(../visuels/bg.png) top left repeat-x;
+	background: #FFF url(../visuels/bg.png) top left repeat-x;
 }
 .ui-overlay-b, .ui-page-theme-b, .ui-page-theme-b .ui-panel-wrapper, .ui-page-theme-b .ui-body-inherit {
-	background: #000 url(../visuels/bg.png) top left repeat-x;
+	background: #FFF url(../visuels/bg.png) top left repeat-x;
 }
 #search-box, #book-box {
 	display: none;
@@ -109,7 +109,7 @@ ul.popers a {
 .expends {
 	display: inline-block;
 	width: 96%;
-	color: #FC0;
+	color: #1996D7;
 	cursor: pointer;
 }
 #details, #book, #histBlock {
