@@ -107,7 +107,7 @@
 		function onBackKeyDown() {
 			//history.back();
 			//changePage('#infos');
-			alert('Veuillez ne pas quitter myTaxi pendant la recheche de taxi disponibles');
+			alert('Veuillez ne pas quitter Ambu Life pendant la recheche de taxi disponibles');
 		}
 		// Bouton menu
 		function onMenuKeyDown() {
@@ -170,7 +170,7 @@
 			setTimeout(function(){
 				//alert(result.name + " " + result.phoneNumber);
 				var number = result.phoneNumber;
-				var message = "Téléchargez l'app myTaxi 34 en suivant ce lien : http://www.taximedia.fr/stores.php?app=mytaxi&dep=34";
+				var message = "Téléchargez l'app Ambu Life en suivant ce lien : http://www.taximedia.fr/stores.php?app=mytaxi&dep=34";
 				var intent = ""; //leave empty for sending sms using default intent
 				var success = function () {
 					//alert('Message sent successfully');
@@ -238,7 +238,7 @@
 	function login() {
 		var id = $('#login').val();
 		var pwd = $('#pwd').val();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/login_app.php", { id: id, pwd: pwd, kinda: 'pro'}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/login_app.php", { id: id, pwd: pwd, kinda: 'ambu'}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('company', data.nom); // here name = company name
 			$.localStorage.setItem('email', data.email);
@@ -263,7 +263,7 @@
 		tel = $('#subTel').val();
 		email = $('#subMail').val();
 		$("#subReturns").empty();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/register_app.php", { nom: nom, tel: tel, email: email, kinda: 'pro'}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/register_app.php", { nom: nom, tel: tel, email: email, kinda: 'ambu'}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('company', data.nom); // here name = company name
 			$.localStorage.setItem('email', data.email);
@@ -302,7 +302,7 @@
 		email = $('#accMail').val();
 		pwd = $('#accPwd').val();
 		$("#accReturns").empty();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd, kinda: 'pro'}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd, kinda: 'ambu'}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('company', data.nom); // here name = company name
 			$.localStorage.setItem('email', data.email);
@@ -334,7 +334,7 @@
 	function forgottenPwd() {
 		var login = $('#forgotTel').val();
 		var mail = $('#forgotMail').val();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/forget_app.php", { login: login, mail: mail, kinda: 'pro'}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/forget_app.php", { login: login, mail: mail, kinda: 'ambu'}, function(data) {
 			var display = '';
 			if (data.sent)
 			{
@@ -369,21 +369,21 @@
 		$('#bookBlock'+n).slideToggle('slow');
 	}
 	function refreshHist() {
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 1}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 1}, function(data){
 			$.mobile.loading( "show" );
 			$("#hist_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 0}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 0}, function(data){
 			$.mobile.loading( "show" );
 			$("#book_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
 	}
 	$( '#history' ).live( 'pagecreate',function(event){
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 1}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 1}, function(data){
 			$.mobile.loading( "show" );
 			$("#hist_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 0}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 0}, function(data){
 			$.mobile.loading( "show" );
 			$("#book_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
@@ -423,7 +423,7 @@
 		var vehicule = $(".rating3").data("val");
 		var conduite = $(".rating4").data("val");
 		//alert(rtaxi+' - '+ridcourse+' - '+rdep+' - '+rtel+' - '+accueil+' - '+tarif+' - '+vehicule+' - '+conduite);
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/rate.php", { taxi: rtaxi, idcourse: ridcourse, dep: rdep, tel: rtel, accueil: accueil, tarif: tarif, vehicule: vehicule, conduite: conduite, judge: 1}, function(data){ $('#rateBack').empty().append('Vos notes ont &eacute;t&eacute; prise en compte, Merci.');});
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/rate.php", { taxi: rtaxi, idcourse: ridcourse, dep: rdep, tel: rtel, accueil: accueil, tarif: tarif, vehicule: vehicule, conduite: conduite, judge: 1}, function(data){ $('#rateBack').empty().append('Vos notes ont &eacute;t&eacute; prise en compte, Merci.');});
 	}
 	$( '#book_page' ).live( 'pagecreate',function(event){
 		var myDate = new Date();
