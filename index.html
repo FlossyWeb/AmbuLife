@@ -3,7 +3,7 @@
     <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="CONTENT-LANGUAGE" content="French">
-    <title>My Taxi 34 Pro by Taxi Global Services</title>
+    <title>Ambu Life by TaxiMedia</title>
     <link rel="apple-touch-icon" href="visuels/idev.favicon.png"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <!-- <meta name="viewport" content="width=device-width, height=device-height, user-scalable=yes, initial-scale=1"/> -->
@@ -32,10 +32,10 @@
             $.mobile.allowCrossDomainPages = true;
             $.mobile.selectmenu.prototype.options.nativeMenu = false;
 			//$.mobile.ajaxEnabled = false;
-			$.mobile.loader.prototype.options.text = "Veuillez patienter pendant la recherche de taxi disponible. Merci de votre confiance !";
+			$.mobile.loader.prototype.options.text = "Veuillez patienter pendant la recherche d&rsquo;ambulance disponible. Merci de votre confiance !";
 			$.mobile.loader.prototype.options.textVisible = "true";
 			$.mobile.loader.prototype.options.theme = "a";
-			$.mobile.loader.prototype.options.html = '<span class="ui-bar ui-overlay-c ui-corner-all"><center><img src="visuels/preload_world.gif"/><br><span style="color:#F00;">Veuillez patienter pendant la recherche de taxis disponibles</span><br>Merci de votre confiance !</center></span>';
+			$.mobile.loader.prototype.options.html = '<span class="ui-bar ui-overlay-c ui-corner-all"><center><img src="visuels/preload_world.gif"/><br><span style="color:#F00;">Veuillez patienter pendant la recherche d&rsquo;ambulances disponibles</span><br>Merci de votre confiance !</center></span>';
         });
     </script>    
     <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
@@ -107,7 +107,7 @@
 		function onBackKeyDown() {
 			//history.back();
 			//changePage('#infos');
-			alert('Veuillez ne pas quitter Ambu Life pendant la recheche de taxi disponibles');
+			alert('Veuillez ne pas quitter Ambu Life pendant la recheche de ambulance disponibles');
 		}
 		// Bouton menu
 		function onMenuKeyDown() {
@@ -225,7 +225,7 @@
 		}
 		else {
 			//alert(nom+' - '+mngid+' - '+tel);
-			$.post("https://ssl14.ovh.net/~taxibleu/server/get_contacts.php", {dep: '34', tel: tel}, function(data) {
+			$.post("https://ssl14.ovh.net/~taxibleu/server/get_contacts.php", {dep: 'ambu', tel: tel}, function(data) {
 				$('#contReturn').empty().append(data);
 				$( "#popCont" ).popup( "open", { positionTo: "window" } );
 			});
@@ -273,6 +273,8 @@
 			{
 				//alert(data.subscribed+' '+data.telexist+' '+data.telvalid+' '+data.emailvalid);
 				$.localStorage.setItem('registeredUser', 1);
+				$('#Accurate').val(data.nom);
+				$('#cellular').val(data.tel);
 				$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 				//display = '<p><b>' + data.civil + ' ' + data.nom + ' ' + data.prenom + ' Voici les informations d&rsquo;identification qui vous permettront d&rsquo;acc&egrave;der &agrave; votre compte :<br><span style="color:#09F;">Identifiant = ' + data.tel + '<br>Mot de passe = ' + data.pwd + '</span><br>Vous les recevrez dans quelques instants &agrave; cet email : <span style="color:#09F;">' + data.email + '</span>, merci.<br></b></p>';
 			}
@@ -369,21 +371,21 @@
 		$('#bookBlock'+n).slideToggle('slow');
 	}
 	function refreshHist() {
-		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 1}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: 'ambu', operator: operator, hist: 1}, function(data){
 			$.mobile.loading( "show" );
 			$("#hist_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
-		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 0}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: 'ambu', operator: operator, hist: 0}, function(data){
 			$.mobile.loading( "show" );
 			$("#book_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
 	}
 	$( '#history' ).live( 'pagecreate',function(event){
-		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 1}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: 'ambu', operator: operator, hist: 1}, function(data){
 			$.mobile.loading( "show" );
 			$("#hist_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
-		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: '34', operator: operator, hist: 0}, function(data){
+		$.post("https://ssl14.ovh.net/~taxibleu/ambulifesrv/history.php", { tel: tel, pass: 1, dep: 'ambu', operator: operator, hist: 0}, function(data){
 			$.mobile.loading( "show" );
 			$("#book_cont").empty().append(data);
 		}).done(function() { $.mobile.loading( "hide" ); });
@@ -398,7 +400,7 @@
 	}
 	$( '#rate_page' ).live( 'pagecreate',function(event){
 		var noted = $.sessionStorage.getItem('rtaxi');
-		$('#urate').empty().append('Vous notez le taxi '+noted);
+		$('#urate').empty().append('Vous notez l&rsquo;ambulance '+noted);
 		$(".rating").starRating({
 			minus: false // step minus button
 		});
@@ -502,7 +504,7 @@
 		var rdvlng = '';
 		url = '';
 		num_req = idcourse;
-		url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep=34&group=1&ack=0&db=1&prix=20000';
+		url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep=ambu&group=1&ack=0&db=1&prix=20000';
 		url = url.replace(/'/g, "&rsquo;");
 		url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 		$.post("https://ssl14.ovh.net/~taxibleu/server/bookings_app_share.php", url, function(data) {});
@@ -788,7 +790,7 @@
 	$('#fleet_page').live('pagecreate', function() {
 		$('#fleet_map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
 			var self = this;
-			$.post('https://ssl14.ovh.net/~taxibleu/server34/station_fleet_xml.php?group=1', function(xml){
+			$.post('https://ssl14.ovh.net/~taxibleu/serverambu/station_fleet_xml.php?group=1', function(xml){
 				$(xml).find('marker').each(function(){
 					var name = $(this).attr('name');
 					var address = $(this).attr('address');
@@ -796,12 +798,12 @@
 					var lng = $(this).attr('lng');
 					var timestamp = $(this).attr('timestamp');
 					i = $(this).attr('count');
-					$('.cabNum').empty().append('Il y a actuellement '+i+' Taxis disponibles.');
+					$('.cabNum').empty().append('Il y a actuellement '+i+' Ambulances disponibles.');
 					var latlng = new google.maps.LatLng(lat, lng);			
-					var display_name = 'Taxi ' + name;
+					var display_name = 'Ambulance ' + name;
 					var cabIcon = 'visuels/cab_marker.png';
 					self.addMarker({ id: i ,'position': latlng, 'bounds': false, 'title': display_name, 'icon': cabIcon }).click(function() {
-						infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + name + ' - ' + address+ '</b></p>';
+						infoCont = '<p style="color:#333;"><b>Ambulance n&deg; ' + name + ' - ' + address+ '</b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
 					//sefl.addBounds(latlng);
@@ -872,15 +874,15 @@
 			$.post('https://ssl14.ovh.net/~taxibleu/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
-					var display_name = 'Taxi ' + data.name;
+					var display_name = 'Ambulance ' + data.name;
 					var cabIcon = 'visuels/cab_marker.png';
 					self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
-						infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
+						infoCont = '<p style="color:#333;"><b>Ambulance n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
 				}
 				else {
-					alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!');
+					alert('Vous ne pouvez suivre un Ambulance que 30 minutes avant le RDV !!');
 					document.location.href='index.html';
 				}
 			}, "json");
@@ -889,10 +891,10 @@
 					var markerCab = self.get('markers')['cab'];
 					markerCab.setVisible(false);
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
-					var display_name = 'Taxi ' + data.name;
+					var display_name = 'Ambulance ' + data.name;
 					var cabIcon = 'visuels/cab_marker.png';
 					self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
-						infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
+						infoCont = '<p style="color:#333;"><b>Ambulance n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
 					var markerYou = self.get('markers')['you'];
@@ -997,7 +999,7 @@
 		num_req = idcourse;
 		i = 0; // We need to make any numreq unique on that one !!
 		//$.post("https://ssl14.ovh.net/~taxibleu/server/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
-		$.post('https://ssl14.ovh.net/~taxibleu/server/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: '34', zip: zip, pass: 'true'}, function(xml){
+		$.post('https://ssl14.ovh.net/~taxibleu/server/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: 'ambu', zip: zip, pass: 'true'}, function(xml){
 			//alert('IN');
 			$(xml).find('marker').each(function(){
 				var name = $(this).attr('name');
@@ -1009,14 +1011,14 @@
 				i = $(this).attr('count');
 				num_req = num_req+1;
 				var latlng = new google.maps.LatLng(lat2, lng2);			
-				var display_name = 'Taxi ' + name;
+				var display_name = 'Ambulance ' + name;
 				var cabIcon = 'visuels/cab_marker.png';
 				mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
-					infoCont = "<b>Le taxi n&deg; " + name + " est &agrave; " + parseFloat(distance).toFixed(1) + " Km de vous</b><br>" + address;
+					infoCont = "<b>Le Ambulance n&deg; " + name + " est &agrave; " + parseFloat(distance).toFixed(1) + " Km de vous</b><br>" + address;
 					mapEvent.openInfoWindow({ 'content':  infoCont}, this);
 				});
 				//mapEvent.addBounds(latlng);
-				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep=34&group=1&ack=0&db=1&prix=20000';
+				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep=ambu&group=1&ack=0&db=1&prix=20000';
 				url = url.replace(/'/g, "&rsquo;");
 				url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 				//$.post("https://ssl14.ovh.net/~taxibleu/server/diary_app_share.php", url, function(data) {});
@@ -1024,7 +1026,7 @@
 			});
 			num_req = num_req+1;
 			i = parseInt(i,10)+1;
-			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep=34&group=1&ack=0&db=1&prix=20000';
+			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep=ambu&group=1&ack=0&db=1&prix=20000';
 			url = url.replace(/'/g, "&rsquo;");
 			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 			// Sends Auction Request to TaxiMedia Server
@@ -1052,7 +1054,7 @@
 	
     function check_answer()
     {
-		$.post("https://ssl14.ovh.net/~taxibleu/server34/status.php?idcourse=" + idcourse + "&check=1" , {}, function(data){ 
+		$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/status.php?idcourse=" + idcourse + "&check=1" , {}, function(data){ 
 			if (data != 0)
 			{
 				clearInterval(time);
@@ -1082,7 +1084,7 @@
     function cancel(idcourse)
     {
 		//alert(idcourse);
-        $.post("https://ssl14.ovh.net/~taxibleu/server34/diary.php?idcourse=" + idcourse + "&ack=1&db=1&cab_wont=1&del=1"); 
+        $.post("https://ssl14.ovh.net/~taxibleu/ambuserver/diary.php?idcourse=" + idcourse + "&ack=1&db=1&cab_wont=1&del=1"); 
     }        
 	function stopCall()
 	{
@@ -1118,7 +1120,7 @@
           <li><a href="#infos" class="ui-btn ui-btn-icon-left ui-icon-home"><b>Accueil</b></a></li>
           <li><a href="#history" class="ui-btn ui-btn-icon-left ui-icon-bars">Historique</a></li>
           <li><a href="#account" class="ui-btn ui-btn-icon-left ui-icon-user">Mon compte</a></li>
-          <li><a href="#fleet_page" class="ui-btn ui-btn-icon-left ui-icon-eye">Taxis disponibles</a></li>
+          <li><a href="#fleet_page" class="ui-btn ui-btn-icon-left ui-icon-eye">Ambulances dispos</a></li>
           <li><a href="#" onClick="Share()" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-mail"><b>Partager l&rsquo;app</b></a></li>
           <li><a href="#" onClick="goScan()" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-camera"><b>Scanner un code</b></a></li>
         </ul>
@@ -1279,7 +1281,7 @@
                         </h1>
                     </div>
                     <div class="ui-content" role="main">
-                        <p><strong>Aucun taxis n&rsquo;a r&eacute;pondu, vous devriez rechercher de nouveau.</strong></p>
+                        <p><strong>Aucune ambulances n&rsquo;a r&eacute;pondu, vous devriez rechercher de nouveau.</strong></p>
                     </div>
                 </div>
             </div>
