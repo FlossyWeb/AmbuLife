@@ -71,7 +71,7 @@
 	var email = $.localStorage.getItem('email');
 	var operator = $.localStorage.getItem('operator');
 	var dontReg = false;
-	var mobileMap = { 'center': '43.609, 3.88', 'zoom': 12 };
+	var mobileMap = { 'center': '43.298977,5.386320', 'zoom': 12 };
 	var isPlaceChanged = false;
 
 	// Scanner
@@ -225,7 +225,7 @@
 		}
 		else {
 			//alert(nom+' - '+mngid+' - '+tel);
-			$.post("https://ssl14.ovh.net/~taxibleu/server/get_contacts.php", {dep: 'ambu', tel: tel}, function(data) {
+			$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/get_contacts.php", {dep: 'ambu', tel: tel}, function(data) {
 				$('#contReturn').empty().append(data);
 				$( "#popCont" ).popup( "open", { positionTo: "window" } );
 			});
@@ -507,7 +507,7 @@
 		url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep=ambu&group=1&ack=0&db=1&prix=20000';
 		url = url.replace(/'/g, "&rsquo;");
 		url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-		$.post("https://ssl14.ovh.net/~taxibleu/server/bookings_app_share.php", url, function(data) {});
+		$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/bookings_app_share.php", url, function(data) {});
 	});
 	/*
 	$('#infos').live("swiperight", function() {
@@ -790,7 +790,7 @@
 	$('#fleet_page').live('pagecreate', function() {
 		$('#fleet_map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
 			var self = this;
-			$.post('https://ssl14.ovh.net/~taxibleu/serverambu/station_fleet_xml.php?group=1', function(xml){
+			$.post('https://ssl14.ovh.net/~taxibleu/ambuserver/station_fleet_xml.php?group=1', function(xml){
 				$(xml).find('marker').each(function(){
 					var name = $(this).attr('name');
 					var address = $(this).attr('address');
@@ -871,7 +871,7 @@
 					alert('ADRESSE RDV : '+address+' NON TROUVEE ');
 				}
 			});
-			$.post('https://ssl14.ovh.net/~taxibleu/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+			$.post('https://ssl14.ovh.net/~taxibleu/ambuserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
 					var display_name = 'Ambulance ' + data.name;
@@ -887,7 +887,7 @@
 				}
 			}, "json");
 			var track = setInterval( function () {
-				$.post('https://ssl14.ovh.net/~taxibleu/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+				$.post('https://ssl14.ovh.net/~taxibleu/ambuserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 					var markerCab = self.get('markers')['cab'];
 					markerCab.setVisible(false);
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
@@ -998,8 +998,8 @@
 		url = '';
 		num_req = idcourse;
 		i = 0; // We need to make any numreq unique on that one !!
-		//$.post("https://ssl14.ovh.net/~taxibleu/server/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
-		$.post('https://ssl14.ovh.net/~taxibleu/server/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: 'ambu', zip: zip, pass: 'true'}, function(xml){
+		//$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
+		$.post('https://ssl14.ovh.net/~taxibleu/ambuserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: 'ambu', zip: zip, pass: 'true'}, function(xml){
 			//alert('IN');
 			$(xml).find('marker').each(function(){
 				var name = $(this).attr('name');
@@ -1021,7 +1021,7 @@
 				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep=ambu&group=1&ack=0&db=1&prix=20000';
 				url = url.replace(/'/g, "&rsquo;");
 				url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-				//$.post("https://ssl14.ovh.net/~taxibleu/server/diary_app_share.php", url, function(data) {});
+				//$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/diary_app_share.php", url, function(data) {});
 				$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
 			});
 			num_req = num_req+1;
@@ -1029,9 +1029,9 @@
 			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep=ambu&group=1&ack=0&db=1&prix=20000';
 			url = url.replace(/'/g, "&rsquo;");
 			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-			// Sends Auction Request to TaxiMedia Server
+			// Sends Auction Request to TaxiMedia ambuserver
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
-			//$.post("https://ssl14.ovh.net/~taxibleu/server/diary_app_share.php", url, function(data) {});
+			//$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/diary_app_share.php", url, function(data) {});
 		}, "xml");
 		$.mobile.loading( "hide" );
 		$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
@@ -1049,7 +1049,7 @@
 	
     function sendJob(url)
     {	
-		$.post("https://ssl14.ovh.net/~taxibleu/server/diary_app_share.php", url, function(data) {});
+		$.post("https://ssl14.ovh.net/~taxibleu/ambuserver/diary_app_share.php", url, function(data) {});
     }
 	
     function check_answer()
