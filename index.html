@@ -1014,7 +1014,7 @@
 				var display_name = 'Ambulance ' + name;
 				var cabIcon = 'visuels/cab_marker.png';
 				mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
-					infoCont = "<b>Le Ambulance n&deg; " + name + " est &agrave; " + parseFloat(distance).toFixed(1) + " Km de vous</b><br>" + address;
+					infoCont = "<b>L&rsquo;Ambulance n&deg; " + name + " est &agrave; " + parseFloat(distance).toFixed(1) + " Km de vous</b><br>" + address;
 					mapEvent.openInfoWindow({ 'content':  infoCont}, this);
 				});
 				//mapEvent.addBounds(latlng);
