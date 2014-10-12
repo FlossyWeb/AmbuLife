@@ -712,6 +712,7 @@
         var getback = setTimeout( function () {
             $("#cancel").trigger('click');
         }, 180000);
+		$('#map').gmap('clear', 'markers');
 		//demo.add('basic_map', function() {
 		//$('#dblinks').empty();
 		$('#map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
@@ -1095,12 +1096,17 @@
 		cancel(idcourse);
 		$( "#backPop" ).popup( "open", { positionTo: "window" } );
 		var wait2getBack = setTimeout( function () {
-			document.location.href='index.html';
-		}, 2000);
+			//document.location.href='index.html';
+			$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
+		}, 1000);
 	}
     function goback(flag)
     {
-        document.location.href=flag;
+		$('#dblinks').empty();	 
+		clearInterval(time);
+		clearTimeout(endcourse);
+        //document.location.href=flag;
+		$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
     }        
     function processMap()
     {
